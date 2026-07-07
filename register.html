@@ -90,7 +90,7 @@
         let password = document.getElementById("password").value;
         let role = document.getElementById("role").value;
 
-        let response = await fetch("http://localhost:5000/register", {
+        let response = await fetch("/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

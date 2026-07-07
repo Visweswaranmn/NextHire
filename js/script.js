@@ -179,7 +179,7 @@ async function loadJobs() {
   // load jobs posted through this app (MongoDB) first, so they still show
   // even if the external jobs API below is unreachable
   try {
-    let postedJobsResponse = await fetch("http://localhost:5000/jobs");
+    let postedJobsResponse = await fetch("/jobs");
     let postedJobs = await postedJobsResponse.json();
 
     postedJobs.forEach(job => {
@@ -422,7 +422,7 @@ function saveJob(title, company, location) {
   // also persist to MongoDB so saved jobs aren't lost if localStorage is cleared
   let user = JSON.parse(localStorage.getItem("user"));
 
-  fetch("http://localhost:5000/save-job", {
+  fetch("/save-job", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -487,7 +487,7 @@ async function addJob() {
   let currentUser = JSON.parse(localStorage.getItem("user"));
 
   try {
-    let response = await fetch("http://localhost:5000/admin/post-job", {
+    let response = await fetch("/admin/post-job", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

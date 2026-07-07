@@ -8,14 +8,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// serve the frontend (HTML/CSS/JS) from this same service
+app.use(express.static(__dirname));
+
 
 // =============================
-// TEST ROUTES
+// TEST ROUTE
 // =============================
-app.get("/", (req, res) => {
-  res.send("Backend working");
-});
-
 app.get("/test", (req, res) => {
   res.send("API working");
 });
@@ -24,7 +23,7 @@ app.get("/test", (req, res) => {
 // =============================
 // MONGODB CONNECTION
 // =============================
-mongoose.connect("mongodb://127.0.0.1:27017/jobportal")
+mongoose.connect(process.env.MONGO_URL || "mongodb://127.0.0.1:27017/jobportal")
   .then(() => console.log("MongoDB Connected"))
   .catch(error => console.log(error));
 
@@ -275,6 +274,8 @@ app.get("/jobs", async (req, res) => {
 // =============================
 // START SERVER
 // =============================
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
