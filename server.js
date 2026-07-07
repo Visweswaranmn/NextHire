@@ -5,7 +5,9 @@ const bcrypt = require("bcryptjs");
 
 const app = express();
 
-app.use(cors());
+// CORS_ORIGIN lets the deployed frontend's exact domain be allow-listed in production;
+// defaults to open ("*") so local development is unaffected.
+app.use(cors({ origin: process.env.CORS_ORIGIN || "*" }));
 app.use(express.json());
 
 // serve the frontend (HTML/CSS/JS) from this same service

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: nexthire-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGO_URL
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
