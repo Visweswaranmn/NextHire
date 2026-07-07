@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Job - NextHire</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="logo">Next<span>Hire</span></div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="navMenu" class="nav">
+      <a href="index.html">Home</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="login.html" class="auth-link">Login</a>
+      <a href="register.html" class="auth-link">Register</a>
+      <a href="postjob.html">Post Job</a>
+
+      <div id="userSection" class="user-section"></div>
+    </nav>
+  </header>
+
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <main>
+    <section class="jobs-section">
+      <div class="form-box plain reveal">
+        <span class="section-eyebrow">Employers</span>
+        <h2>Post a Job</h2>
+
+        <form id="postJobForm" onsubmit="event.preventDefault(); submitJobPost();">
+          <div class="form-grid">
+            <div class="form-field">
+              <input type="text" id="jobTitle" placeholder=" " required>
+              <label for="jobTitle">Job Title</label>
+            </div>
+
+            <div class="form-field">
+              <input type="text" id="jobCompany" placeholder=" " required>
+              <label for="jobCompany">Company Name</label>
+            </div>
+
+            <div class="form-field">
+              <input type="text" id="jobLocation" placeholder=" " required>
+              <label for="jobLocation">Location</label>
+            </div>
+
+            <div class="form-field">
+              <input type="text" id="jobSalary" placeholder=" " required>
+              <label for="jobSalary">Salary</label>
+            </div>
+
+            <div class="form-field static full">
+              <label for="jobDescription">Job Description</label>
+              <textarea id="jobDescription" placeholder="Describe the responsibilities, requirements and benefits..." rows="6"></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Post Job</button>
+
+          <p id="postJobMsg" class="form-msg"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+
+  <script>
+    async function submitJobPost() {
+      let titleEl = document.getElementById("jobTitle");
+      let companyEl = document.getElementById("jobCompany");
+      let locationEl = document.getElementById("jobLocation");
+      let salaryEl = document.getElementById("jobSalary");
+      let descriptionEl = document.getElementById("jobDescription");
+      let msgEl = document.getElementById("postJobMsg");
+
+      msgEl.textContent = "";
+      msgEl.className = "form-msg";
+
+      try {
+        let response = await fetch("http://localhost:5000/post-job", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            title: titleEl.value,
+            company: companyEl.value,
+            location: locationEl.value,
+            salary: salaryEl.value,
+            description: descriptionEl.value
+          })
+        });
+
+        let data = await response.json();
+
+        if (!response.ok) {
+          msgEl.textContent = data.message;
+          msgEl.className = "form-msg error";
+          return;
+        }
+
+        msgEl.textContent = data.message;
+        msgEl.className = "form-msg success";
+
+        document.getElementById("postJobForm").reset();
+
+      } catch (error) {
+        console.error(error);
+        msgEl.textContent = "Failed to post job. Please try again.";
+        msgEl.className = "form-msg error";
+      }
+    }
+  </script>
+
+</body>
+</html>

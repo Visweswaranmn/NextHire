@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobs - NextHire</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    // this page requires an active session — bounce guests to Login
+    let user = localStorage.getItem("user");
+
+    if (!user) {
+      alert("Please login first");
+      window.location.href = "login.html";
+    }
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Next<span>Hire</span></div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="navMenu" class="nav">
+      <a href="index.html">Home</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="login.html" class="auth-link">Login</a>
+      <a href="register.html" class="auth-link">Register</a>
+      <a href="postjob.html">Post Job</a>
+      <a href="savedjobs.html">Saved Jobs</a>
+
+      <div id="userSection" class="user-section"></div>
+    </nav>
+  </header>
+
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <main>
+    <section class="jobs-section">
+      <h1>Available Jobs</h1>
+      <h2 id="currentCategory"></h2>
+
+      <div class="job-search">
+        <input type="text" id="jobSearch" placeholder="Search jobs..." onkeyup="searchJobs()">
+      </div>
+
+      <div class="category-filter">
+        <button class="pill active" data-category="all" onclick="filterCategory('all')">All</button>
+        <button class="pill" data-category="software" onclick="filterCategory('software')">IT</button>
+        <button class="pill" data-category="marketing" onclick="filterCategory('marketing')">Marketing</button>
+        <button class="pill" data-category="finance" onclick="filterCategory('finance')">Finance</button>
+      </div>
+
+      <div class="experience-filter">
+        <select id="experienceLevel" onchange="filterExperience()">
+          <option value="all">All Experience</option>
+          <option value="fresher">Fresher</option>
+          <option value="junior">1-3 Years</option>
+          <option value="senior">3+ Years</option>
+        </select>
+      </div>
+
+      <div class="jobs-container" id="jobsContainer">
+        <div class="spinner"></div>
+      </div>
+
+      <div class="load-more-container">
+        <button onclick="loadMoreJobs()" class="btn btn-secondary load-more-btn">Load More Jobs</button>
+      </div>
+
+      <div class="pagination">
+        <button data-page="1" class="active" onclick="changePage(1)">1</button>
+        <button data-page="2" onclick="changePage(2)">2</button>
+        <button data-page="3" onclick="changePage(3)">3</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="jobModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="modalTitle"></h2>
+      <p id="modalCompany"></p>
+      <p id="modalLocation"></p>
+      <p id="modalDate" class="date"></p>
+      <a id="modalApply" target="_blank" onclick="applyJob()">
+        <button class="apply-btn" type="button">Apply Now</button>
+      </a>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

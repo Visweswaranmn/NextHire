@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - NextHire</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    // restrict this page to signed-in Employer accounts
+    let user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      alert("Please login first");
+      window.location.href = "login.html";
+    } else if (user.role !== "Employer") {
+      alert("Admin access is restricted to Employer accounts");
+      window.location.href = "index.html";
+    }
+  </script>
+</head>
+<body class="admin-page">
+
+  <header>
+    <div class="logo">Admin<span>Panel</span></div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="navMenu" class="nav">
+      <a href="index.html">Home</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <main>
+    <section class="admin-shell">
+      <span class="section-eyebrow">Dashboard</span>
+      <h1>Add New Job</h1>
+
+      <div class="form-box plain reveal">
+        <div class="form-grid">
+          <div class="form-field">
+            <input type="text" id="jobTitle" placeholder=" " required>
+            <label for="jobTitle">Job Title</label>
+          </div>
+
+          <div class="form-field">
+            <input type="text" id="jobCompany" placeholder=" " required>
+            <label for="jobCompany">Company</label>
+          </div>
+
+          <div class="form-field">
+            <input type="text" id="jobLocation" placeholder=" " required>
+            <label for="jobLocation">Location</label>
+          </div>
+
+          <div class="form-field">
+            <input type="text" id="jobSalary" placeholder=" ">
+            <label for="jobSalary">Salary (optional)</label>
+          </div>
+        </div>
+
+        <button onclick="addJob()" class="btn btn-primary btn-block">Add Job</button>
+
+        <p id="adminMsg" class="form-msg"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

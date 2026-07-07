@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NextHire</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="logo">Next<span>Hire</span></div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="navMenu" class="nav">
+      <a href="index.html">Home</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="login.html" class="auth-link">Login</a>
+      <a href="register.html" class="auth-link">Register</a>
+      <a href="postjob.html">Post Job</a>
+      <a href="savedjobs.html">Saved Jobs</a>
+
+      <div id="userSection" class="user-section"></div>
+    </nav>
+  </header>
+
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <main>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Find Your Dream Job</h1>
+        <p>Search thousands of job opportunities and build your career today.</p>
+
+        <div class="buttons">
+          <a href="jobs.html" class="btn btn-primary">Browse Jobs</a>
+          <a href="register.html" class="btn btn-outline">Create Account</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORY SECTION -->
+    <section class="categories">
+      <span class="section-eyebrow">Categories</span>
+      <h2>Browse by Category</h2>
+      <p class="section-subtitle">Jump straight into the field you're aiming for.</p>
+
+      <div class="category-container">
+        <div class="category-card reveal" role="button" tabindex="0" onclick="goCategory('software')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goCategory('software');}">
+          <span class="icon">💻</span> IT &amp; Software
+        </div>
+
+        <div class="category-card reveal" role="button" tabindex="0" onclick="goCategory('marketing')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goCategory('marketing');}">
+          <span class="icon">📊</span> Marketing
+        </div>
+
+        <div class="category-card reveal" role="button" tabindex="0" onclick="goCategory('finance')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goCategory('finance');}">
+          <span class="icon">💰</span> Finance
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED JOBS -->
+    <section class="featured-jobs">
+      <span class="section-eyebrow">Featured</span>
+      <h2>Featured Jobs</h2>
+      <p class="section-subtitle">A quick look at roles currently open.</p>
+
+      <div class="jobs-container">
+        <div class="job-card reveal">
+          <h3>Java Developer</h3>
+          <p>🏢 ABC Tech</p>
+          <p>📍 Coimbatore</p>
+          <div class="job-actions">
+            <button class="btn btn-primary btn-sm btn-block" onclick="window.location.href='jobs.html'">View Jobs</button>
+          </div>
+        </div>
+
+        <div class="job-card reveal">
+          <h3>Frontend Developer</h3>
+          <p>🏢 XYZ Solutions</p>
+          <p>📍 Chennai</p>
+          <div class="job-actions">
+            <button class="btn btn-primary btn-sm btn-block" onclick="window.location.href='jobs.html'">View Jobs</button>
+          </div>
+        </div>
+
+        <div class="job-card reveal">
+          <h3>Data Analyst</h3>
+          <p>🏢 Insight Pvt Ltd</p>
+          <p>📍 Bangalore</p>
+          <div class="job-actions">
+            <button class="btn btn-primary btn-sm btn-block" onclick="window.location.href='jobs.html'">View Jobs</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="postjob.html">Post a Job</a>
+      <a href="savedjobs.html">Saved Jobs</a>
+    </div>
+    <p>© 2026 NextHire | College Project</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

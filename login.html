@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - NextHire</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="logo">Next<span>Hire</span></div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="navMenu" class="nav">
+      <a href="index.html">Home</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="register.html" class="auth-link">Register</a>
+
+      <div id="userSection" class="user-section"></div>
+    </nav>
+  </header>
+
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <main>
+    <section class="form-section">
+      <div class="form-box">
+        <h2>Welcome Back</h2>
+        <p class="form-subtitle">Login to continue your job search.</p>
+
+        <form onsubmit="event.preventDefault(); loginUser();">
+          <div class="form-field">
+            <input type="email" id="email" placeholder=" " required>
+            <label for="email">Email Address</label>
+            <span class="field-hint">Enter a valid email address</span>
+          </div>
+
+          <div class="form-field password-box">
+            <input type="password" id="password" placeholder=" " required>
+            <label for="password">Password</label>
+            <span onclick="togglePassword()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePassword();}" class="eye" role="button" tabindex="0" aria-label="Toggle password visibility">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </span>
+            <span class="field-hint">Password is required</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
+
+          <p id="loginMsg" class="form-msg"></p>
+          <p>Don't have an account? <a href="register.html">Register</a></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+
+  <script>
+    async function loginUser() {
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+      let msgEl = document.getElementById("loginMsg");
+
+      msgEl.textContent = "";
+      msgEl.className = "form-msg";
+
+      try {
+        let response = await fetch("http://localhost:5000/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        let data = await response.json();
+
+        if (data.message === "Login successful") {
+          msgEl.textContent = data.message;
+          msgEl.className = "form-msg success";
+
+          localStorage.setItem("user", JSON.stringify(data.user));
+
+          setTimeout(() => window.location.href = "index.html", 500);
+        } else {
+          msgEl.textContent = data.message;
+          msgEl.className = "form-msg error";
+        }
+
+      } catch (error) {
+        console.error(error);
+        msgEl.textContent = "Login failed. Please try again.";
+        msgEl.className = "form-msg error";
+      }
+    }
+  </script>
+
+</body>
+</html>

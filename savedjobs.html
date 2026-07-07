@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Jobs - NextHire</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="logo">Next<span>Hire</span></div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="navMenu" class="nav">
+      <a href="index.html">Home</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="savedjobs.html">Saved Jobs</a>
+      <a href="login.html" class="auth-link">Login</a>
+      <a href="register.html" class="auth-link">Register</a>
+
+      <div id="userSection" class="user-section"></div>
+    </nav>
+  </header>
+
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <main>
+    <section class="jobs-section">
+      <h1>Saved Jobs</h1>
+      <p class="section-subtitle">Jobs you bookmarked while browsing.</p>
+
+      <div class="jobs-container" id="savedJobsContainer"></div>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+
+  <script>
+    function renderSavedJobs() {
+      let savedJobs = JSON.parse(localStorage.getItem("savedJobs")) || [];
+      let savedJobsContainer = document.getElementById("savedJobsContainer");
+
+      savedJobsContainer.innerHTML = "";
+
+      if (savedJobs.length === 0) {
+        savedJobsContainer.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-illustration"><span class="strap"></span></div>
+            <h3>No saved jobs yet</h3>
+            <p>Jobs you save while browsing will show up here.</p>
+            <a href="jobs.html" class="btn btn-primary">Browse Jobs</a>
+          </div>
+        `;
+        return;
+      }
+
+      savedJobs.forEach((job, index) => {
+        savedJobsContainer.innerHTML += `
+          <div class="job-card reveal">
+            <h3>${escapeHtml(job.title)}</h3>
+            <p>🏢 ${escapeHtml(job.company)}</p>
+            <p>📍 ${escapeHtml(job.location || "Remote")}</p>
+            <div class="job-actions">
+              <button class="btn btn-danger-outline btn-sm btn-block" onclick="removeSavedJob(${index})">✕ Remove</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function removeSavedJob(index) {
+      let savedJobs = JSON.parse(localStorage.getItem("savedJobs")) || [];
+      savedJobs.splice(index, 1);
+      localStorage.setItem("savedJobs", JSON.stringify(savedJobs));
+
+      renderSavedJobs();
+      showToast("Job removed from saved list");
+    }
+
+    renderSavedJobs();
+  </script>
+
+</body>
+</html>
