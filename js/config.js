@@ -3,4 +3,4 @@
 // the same origin, so this value is only used once the frontend is deployed
 // separately on Vercel. Update this one line after Step 6 gives you the
 // live Render URL.
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://nexthire-backend-xh45.onrender.com";
