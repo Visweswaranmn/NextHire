@@ -1,0 +1,8 @@
+# These are the Render backend, not the Vercel static frontend —
+# excluded so Vercel's auto-detection doesn't try to run them as a service.
+server.js
+package.json
+package-lock.json
+node_modules
+render.yaml
+.env.example
