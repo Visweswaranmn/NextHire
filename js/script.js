@@ -107,6 +107,45 @@ function logout() {
   window.location.href = "index.html";
 }
 
+
+// =============================
+// DEMO LOGIN (quick access for recruiters reviewing the project)
+// =============================
+const DEMO_EMAIL = "admin@gmail.com";
+const DEMO_PASSWORD = "12345678";
+
+async function demoLogin() {
+  try {
+    // make sure the shared demo account exists — safe to call every time,
+    // the backend just replies "User already exists" after the first run
+    await fetch(`${API_BASE_URL}/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: "Demo Recruiter", email: DEMO_EMAIL, password: DEMO_PASSWORD, role: "Employer" })
+    });
+
+    let response = await fetch(`${API_BASE_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: DEMO_EMAIL, password: DEMO_PASSWORD })
+    });
+
+    let data = await response.json();
+
+    if (data.message === "Login successful") {
+      localStorage.setItem("user", JSON.stringify(data.user));
+      showToast("Logged in as demo user!");
+      setTimeout(() => window.location.href = "index.html", 500);
+    } else {
+      showToast(data.message, "error");
+    }
+
+  } catch (error) {
+    console.error(error);
+    showToast("Demo login failed. Please try again.", "error");
+  }
+}
+
 document.addEventListener("DOMContentLoaded", initNavbar);
 
 
